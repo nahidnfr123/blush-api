@@ -22,11 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Passport::loadKeysFrom(__DIR__ . '/../../storage/keys');
+//        Passport::loadKeysFrom(__DIR__ . '/../../storage/keys');
 
         ini_set('max_execution_time', '10024');
         ini_set('max_input_time', '10024');
         ini_set('memory_limit', '-1');
+
+
+        Passport::tokensExpireIn(now()->addDays(15));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
 
         Product::observe(ProductObserver::class);
     }

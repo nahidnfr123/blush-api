@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         Artisan::call('config:cache');
 
 //        Artisan::call('passport:install', ['--force' => true,]);
+        Artisan::call('passport:keys', ['--force' => true,]);
         Artisan::call('optimize:clear');
 
         // \App\Models\User::factory(10)->create();
