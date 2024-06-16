@@ -14,7 +14,15 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'description' => env('APP_DESCRIPTION', 'This is a ready to use ecommerce application built with Laravel & AlpineJS.'),
+    'keywords' => env('APP_KEYWORDS', 'ecommerce, application, products, electronics, sales, online, store, shop, buy, sell, cart, laravel, php, mysql, bootstrap, jquery, ajax, html, css, javascript, vuejs, vue, admin panel.'),
+    'author' => env('APP_AUTHOR', 'Nahid Ferdous | Trinmora Labs'),
+    'author_link' => env('APP_AUTHOR_LINK', 'https://byteflare.io'),
+    'email' => '',
+    'phone' => '',
+    'address' => '',
+    'logo' => '',
+    'favicon' => '',
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -54,6 +62,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:3000'),
+
+    'asset_url' => env('ASSET_URL'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

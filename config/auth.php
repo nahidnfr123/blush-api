@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\GuardEnums;
+
 return [
 
     /*
@@ -41,9 +43,17 @@ return [
             'provider' => 'users',
         ],
 
+        // passport customer auth guard
         'api' => [
+            // 'driver' => 'sanctum',
             'driver' => 'passport',
             'provider' => 'users',
+            'hash' => false,
+        ],
+        // passport admin auth guard
+        GuardEnums::Admin->value => [
+            'driver' => 'passport',
+            'provider' => 'admins',
         ],
     ],
 
@@ -68,6 +78,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -99,6 +113,12 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'admin_password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
