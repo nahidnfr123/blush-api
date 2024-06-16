@@ -3,13 +3,24 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\GuardEnums;
+use App\Traits\FormatedDateTrait;
+use App\Traits\TrashScope;
+use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+//use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
+use NahidFerdous\Searchable\Searchable;
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, MustVerifyEmail, SoftDeletes, HasRoles;
+    use TrashScope, Searchable, FormatedDateTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +29,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
+        'mobile',
         'password',
+        'mobile_verified_at',
+        'provider_id',
+        'provider_name',
+        'avatar',
+        'active',
     ];
 
     /**
@@ -33,15 +51,17 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function productRatings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(ProductRating::class);
     }
 }
